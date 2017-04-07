@@ -40,7 +40,22 @@ public class GT4500 implements SpaceShip {
 
     switch (firingMode) {
       case SINGLE:
-        if (wasPrimaryFiredLast) {
+        firingSuccess = single();
+        break;
+
+      case ALL:
+        firingSuccess = all();
+
+        break;
+    }
+
+    return firingSuccess;
+  }
+
+  private boolean single(){
+    boolean firingSuccess = false;
+
+     if (wasPrimaryFiredLast) {
           // try to fire the secondary first
           if (! secondaryTorpedoStore.isEmpty()) {
             firingSuccess = secondaryTorpedoStore.fire(1);
@@ -54,7 +69,7 @@ public class GT4500 implements SpaceShip {
               wasPrimaryFiredLast = true;
             }
 
-            // if both of the stores are empty, nothing can be done, return failure
+            // if both of the stores are empty, nothing can be done, return fai$
           }
         }
         else {
@@ -69,29 +84,40 @@ public class GT4500 implements SpaceShip {
             if (! secondaryTorpedoStore.isEmpty()) {
               firingSuccess = secondaryTorpedoStore.fire(1);
               wasPrimaryFiredLast = false;
-            }
-
-            // if both of the stores are empty, nothing can be done, return failure
+            } // if both of the stores are empty, nothing can be done, return fai$
           }
         }
         break;
 
       case ALL:
         // try to fire both of the torpedos
-	if (! primaryTorpedoStore.isEmpty()) {
+        if (! primaryTorpedoStore.isEmpty()) {
             firingSuccess = primaryTorpedoStore.fire(1);
             wasPrimaryFiredLast = true;
           }
-	 if (! secondaryTorpedoStore.isEmpty()) {
+         if (! secondaryTorpedoStore.isEmpty()) {
               firingSuccess = secondaryTorpedoStore.fire(1);
               wasPrimaryFiredLast = false;
             }
-        //TODO implement feature
 
-        break;
-    }
-
-    return firingSuccess;
+      return firingSuccess;
   }
 
+  private boolean all(){
+    boolean firingSuccess = false;
+
+    if (! primaryTorpedoStore.isEmpty()) {
+            firingSuccess = primaryTorpedoStore.fire(1);
+            wasPrimaryFiredLast = true;
+          }
+         if (! secondaryTorpedoStore.isEmpty()) {
+              firingSuccess = secondaryTorpedoStore.fire(1);
+              wasPrimaryFiredLast = false;
+   
+    return firingSuccess;
+  }
+  
+
 }
+
+ 
